@@ -16,7 +16,7 @@ cd "$(dirname "$0")/.."
 export PYTHONPATH="$(pwd):$PYTHONPATH"
 
 # ── HuggingFace token ─────────────────────────────────────────────────────────
-export HF_TOKEN="${HF_TOKEN:-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}"
+export HF_TOKEN="${HF_TOKEN}"
 export HUGGING_FACE_HUB_TOKEN="$HF_TOKEN"
 
 # ── GPU config ────────────────────────────────────────────────────────────────
