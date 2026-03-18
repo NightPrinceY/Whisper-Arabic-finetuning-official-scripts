@@ -19,7 +19,7 @@ set -euo pipefail
 source ~/CollegeX/bin/activate
 cd "$(dirname "$0")/.."
 
-export HF_TOKEN="${HF_TOKEN:-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}"
+export HF_TOKEN="${}"
 export HF_HUB_ENABLE_HF_TRANSFER=1   # Rust-based fast downloader
 
 echo "Downloading tarteel-ai/everyayah (6 reciters — 17 train + 1 val + 1 test shards)"
