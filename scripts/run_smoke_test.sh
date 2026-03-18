@@ -8,7 +8,7 @@ set -euo pipefail
 source ~/CollegeX/bin/activate
 cd "$(dirname "$0")/.."
 export PYTHONPATH="$(pwd):$PYTHONPATH"
-export HF_TOKEN="${HF_TOKEN:-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}"
+export HF_TOKEN="${HF_TOKEN}"
 
 mkdir -p logs
 TIMESTAMP=$(date +%Y%m%d_%H%M%S)
