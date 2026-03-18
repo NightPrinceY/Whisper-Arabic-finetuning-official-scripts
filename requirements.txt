@@ -1,0 +1,14 @@
+transformers>=4.57.0
+datasets>=4.6.0
+accelerate>=1.0.0
+peft>=0.13.0
+torch>=2.1.0
+torchaudio>=2.1.0
+soundfile>=0.12.1
+librosa>=0.10.0
+evaluate>=0.4.0
+jiwer>=3.0.0
+tensorboard>=2.14.0
+numpy>=1.24.0
+huggingface_hub>=0.24.0
+PyYAML>=6.0

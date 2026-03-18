@@ -1,0 +1,55 @@
+# ─────────────────────────────────────────────
+#  Whisper-Small Quranic Arabic Fine-Tuning — Run 3
+#  Model: NightPrince/stt-arabic-whisper-finetuned-diactires
+#  5 reciters, ~19,922 samples, cosine LR, dropout regularization
+# ─────────────────────────────────────────────
+
+# ---------- Model ----------
+model_name_or_path: "openai/whisper-small"
+hub_model_id: "NightPrince/stt-arabic-whisper-finetuned-diactires"
+language: "arabic"
+task: "transcribe"
+
+# ---------- Dataset ----------
+dataset_name: "tarteel-ai/everyayah"
+# data_dir: path to locally downloaded parquet shards (recommended — no streaming)
+# Set to null to fall back to HuggingFace Hub streaming
+data_dir: "./data/everyayah"
+streaming: false               # ignored when data_dir is set
+shuffle_buffer_size: 5000      # only used in streaming mode
+max_eval_samples: 500
+max_test_samples: 1000
+max_audio_length_seconds: 30.0
+target_sampling_rate: 16000
+
+# ---------- Training ----------
+output_dir: "./outputs/whisper-quran-v2"
+per_device_train_batch_size: 8
+per_device_eval_batch_size: 2   # generation (predict_with_generate) needs ~4× more VRAM than training
+gradient_accumulation_steps: 4   # effective batch = 8×4×4GPUs = 128
+learning_rate: 1.0e-5
+warmup_steps: 500              # ~3 epochs warmup — prevents instability with 5 reciters
+max_steps: 8000                # ~19,284 samples / batch128 ≈ 150 steps/epoch → ~53 epochs max
+                               # EarlyStoppingCallback(patience=5) will fire long before 8000
+weight_decay: 0.05             # strong regularization across 5 diverse reciters
+lr_scheduler_type: "cosine"    # smoother decay than linear — better generalization
+label_smoothing_factor: 0.0    # no smoothing — hurts diacritic precision
+max_grad_norm: 1.0
+
+# ---------- Dropout (model-level regularization) ----------
+dropout: 0.1                   # applied to model encoder/decoder/attention layers
+
+# ---------- Generation ----------
+generation_max_length: 448
+num_beams_eval: 1              # greedy during training (speed); use 5 at inference
+
+# ---------- Logging / Saving ----------
+save_steps: 500                # save every ~3 epochs for finer checkpoint control
+eval_steps: 500                # evaluate every ~3 epochs — catch overfit 2× earlier than before
+logging_steps: 50
+save_total_limit: 5            # keep more checkpoints since we save more frequently
+
+# ---------- Misc ----------
+dataloader_num_workers: 4
+dataloader_prefetch_factor: 2
+seed: 42

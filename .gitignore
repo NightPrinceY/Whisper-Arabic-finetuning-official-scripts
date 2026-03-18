@@ -1,0 +1,45 @@
+# Data — never commit raw audio parquets (multi-GB)
+data/
+outputs/
+logs/
+
+# Python
+__pycache__/
+*.py[cod]
+*.pyo
+*.pyd
+.Python
+*.egg-info/
+dist/
+build/
+*.egg
+.eggs/
+
+# Environments
+.env
+.venv
+env/
+venv/
+CollegeX/
+
+# Secrets — never commit tokens
+*.token
+secrets.yaml
+.env.local
+
+# HuggingFace cache
+.cache/
+
+# Jupyter
+.ipynb_checkpoints/
+*.ipynb
+
+# Editor
+.vscode/
+.idea/
+*.swp
+*.swo
+.DS_Store
+
+# Accelerate config (machine-specific)
+~/.cache/huggingface/accelerate/
